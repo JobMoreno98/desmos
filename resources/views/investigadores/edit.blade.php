@@ -14,11 +14,21 @@
                 </div>
                 <hr>
             </div>
-
+            <div class="d-flex justify-content-center">
+                <div class="containerImgCreate">
+                    @if (Storage::disk('images-investigadores')->has($investigador->image))
+                        <img class="rounded" id="createInvesPic"
+                            src="{{ asset('/storage/images/investigadores/' . $investigador->image) }}" />
+                    @else
+                        <img class="rounded" id="createInvesPic" src=" {{ asset('images/defaultPicture.png') }}">
+                    @endif
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
-                    <form action="{{route('investigadores.update',$investigador->id)}}" method="post" enctype="multipart/form-data" class="col-12">
-                        {!! csrf_field() !!}
+                    <form action="{{ route('investigadores.update', $investigador->id) }}" method="post"
+                        enctype="multipart/form-data" class="col-12">
+                        @csrf
                         {{ method_field('PUT') }}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -31,27 +41,33 @@
                             </div>
                         @endif
                         <br>
+
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="nombre">Nombre(s)* </label>
-                                <input value="{{$investigador->nombre}}" type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}">
+                                <input value="{{ $investigador->nombre }}" type="text" class="form-control"
+                                    id="nombre" name="nombre" value="{{ old('nombre') }}">
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="nombre">Apellido* </label>
-                                <input value="{{$investigador->apellido}}" type="text" class="form-control" id="apellido" name="apellido" value="{{ old('apellido') }}">
+                                <input value="{{ $investigador->apellido }}" type="text" class="form-control"
+                                    id="apellido" name="apellido" value="{{ old('apellido') }}">
                             </div>
-                            
+
                         </div>
                         <br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="linea_investigacion">Linea de investigación* </label>
-                                <input value="{{$investigador->lineasInves}}" type="text" class="form-control" id="linea_investigacion" name="linea_investigacion" value="{{ old('linea_investigacion') }}">
+                                <input value="{{ $investigador->lineasInves }}" type="text" class="form-control"
+                                    id="linea_investigacion" name="linea_investigacion"
+                                    value="{{ old('linea_investigacion') }}">
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="grado">Grado*</label>
                                 <select class="form-control" id="grado" name="grado">
-                                    <option value="{{$investigador->grado}}" selected>{{$investigador->grado}}</option>
+                                    <option value="{{ $investigador->grado }}" selected>{{ $investigador->grado }}
+                                    </option>
                                     <option value="Maestro">Maestro</option>
                                     <option value="Maestra">Maestra</option>
                                     <option value="Maestrante">Maestrante</option>
@@ -65,54 +81,54 @@
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="correo">Reconocimientos* </label>
-                                <input value="{{$investigador->reconocimientos}}" type="text" class="form-control" id="reconocimientos" name="reconocimientos" value="{{ old('reconocimientos') }}">
+                                <input value="{{ $investigador->reconocimientos }}" type="text" class="form-control"
+                                    id="reconocimientos" name="reconocimientos" value="{{ old('reconocimientos') }}">
                             </div>
                             <div class="col-md-6">
-                                <label class="font-weight-bold" for="proyecto_invest">Proyecto de investigación en proceso </label>
-                                <input value="{{$investigador->proyecto_invest}}" type="text" class="form-control" id="proyecto_invest" name="proyecto_invest" value="{{ old('proyecto_invest') }}">
+                                <label class="font-weight-bold" for="proyecto_invest">Proyecto de investigación en proceso
+                                </label>
+                                <input value="{{ $investigador->proyecto_invest }}" type="text" class="form-control"
+                                    id="proyecto_invest" name="proyecto_invest" value="{{ old('proyecto_invest') }}">
                             </div>
                         </div>
 
                         <div class="row align-items-center mt-4">
                             <div class="col-md-12">
                                 <label class="font-weight-bold" for="area">Publicaciones*</label>
-                                <input value="{{$investigador->publicaciones}}" type="text" class="form-control" id="publicaciones" name="publicaciones" value="{{ old('publicaciones') }}">
+                                <input value="{{ $investigador->publicaciones }}" type="text" class="form-control"
+                                    id="publicaciones" name="publicaciones" value="{{ old('publicaciones') }}">
                             </div>
                         </div>
                         <br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="correo">Correo:* </label>
-                                <input value="{{$investigador->correo}}" type="email" class="form-control" id="correo" name="correo" value="{{ old('correo') }}">
+                                <input value="{{ $investigador->correo }}" type="email" class="form-control"
+                                    id="correo" name="correo" value="{{ old('correo') }}">
                             </div>
-
-                        </div>
-                        <div class="row align-items-center">
-                            
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="imagen">Imagen</label>
                                 <div class="custom-file">
-                                    <input name="imagen" type="file" class="custom-file-input" id="customFileLang" accept="image/*"
-                                           lang="es">
+                                    <input name="imagen" type="file" class="custom-file-input" id="customFileLang"
+                                        accept="image/*" lang="es">
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="containerImgCreate">
-                                    @if(Storage::disk('images-investigadores')->has($investigador->image))
-                                        <img id="createInvesPic" src="{{url('/storage/images/investigadores/'.$investigador->image)}}"/>
-                                    @else
-                                        <img id="createInvesPic" src="../../../public/images/defaultPicture.png">
-                                    @endif
-                                    
-                                </div>
+                            <div class="col-sm-12 col-md-3" >
+                                <label class="font-weight-bold" for="">* Estatus:</label>
+                                <select name="estatus" id="" class="form-control">
+                                    <option disabled>Elegir...</option>
+                                    <option {{($investigador->estatus==1)?'selected':''}} value="1">Activo</option>
+                                    <option {{($investigador->estatus==2)?'selected':''}} value="2">Jubilado</option>
+                                    <option {{($investigador->estatus==3)?'selected':''}} value="3">Otro</option>
+                                </select>
                             </div>
 
                         </div>
                         <br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <a href="{{route('investigadores.indexAdmin')}}" class="btn btn-danger">Cancelar</a>
+                                <a href="{{ route('investigadores.indexAdmin') }}" class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-success">
                                     Guardar datos
                                     <i class="ml-1 fas fa-save"></i>
@@ -131,41 +147,40 @@
                 <h5>Departamento de Estudios sobre Movimientos Sociales. DESMOS</h5>
             </div>
     </div>
-
-    @else
-        Acceso denegado
+@else
+    Acceso denegado
     @endif
 
 @endsection
 
 @section('css')
-        <style>
-            .containerImgCreate{
-                margin: 1.5em;
-                width: 150px;
-                height: 200px;
-                position: relative;
-                overflow: hidden;
-            }
-            
-            #createInvesPic{
-                width: 100%;
-                position: absolute;
-                object-fit: contain;
-            }
-            
-        </style>
+    <style>
+        .containerImgCreate {
+            margin: 1.5em;
+            width: 150px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #createInvesPic {
+            width: 100%;
+            position: absolute;
+            object-fit: contain;
+        }
+    </style>
 @stop
 
 @section('js')
     <script>
-        document.getElementById("customFileLang").addEventListener('change',cambiarImagen);
-        function cambiarImagen(event){
+        document.getElementById("customFileLang").addEventListener('change', cambiarImagen);
+
+        function cambiarImagen(event) {
             var file = event.target.files[0];
 
             var reader = new FileReader();
-            reader.onload = (event) =>{
-                document.getElementById('createInvesPic').setAttribute('src',event.target.result);
+            reader.onload = (event) => {
+                document.getElementById('createInvesPic').setAttribute('src', event.target.result);
             };
 
             reader.readAsDataURL(file);

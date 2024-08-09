@@ -22,12 +22,12 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $eventos = Evento::where('activo','=',1)->orderBy('fecha','DESC')->take(4)->get();
-        $investigadores = Investigador::where('activo','=',1)->orderBy('apellido','asc')->take(3)->get();
-        $divulgaciones = Publicacion::where('activo','=',1)->where('categoria','=',3)->orderBy('fecha','desc')->take(3)->get();
-        $secciones = QuienesSomos::where('activo','=',1)->get();
-        $contactos = Contacto::where('activo','=',1)->get();
-        return view('welcome',['eventos'=>$eventos,'investigadores'=>$investigadores,'divulgaciones'=>$divulgaciones, 'secciones'=>$secciones, 'contactos'=>$contactos]);
+        $eventos = Evento::where('activo', '=', 1)->orderBy('fecha', 'DESC')->take(4)->get();
+        $investigadores = Investigador::where('activo', '=', 1)->where('estatus', 1)->orderBy('apellido', 'asc')->take(3)->get();
+        $divulgaciones = Publicacion::where('activo', '=', 1)->where('categoria', '=', 3)->orderBy('fecha', 'desc')->take(3)->get();
+        $secciones = QuienesSomos::where('activo', '=', 1)->get();
+        $contactos = Contacto::where('activo', '=', 1)->get();
+        return view('welcome', ['eventos' => $eventos, 'investigadores' => $investigadores, 'divulgaciones' => $divulgaciones, 'secciones' => $secciones, 'contactos' => $contactos]);
     }
 
     /**
