@@ -10,6 +10,7 @@ class Investigador extends Model
 {
     use HasFactory;
     use Searchable;
+    protected $appends = ['status'];
 
     public function toSearchableArray()
     {
@@ -18,5 +19,11 @@ class Investigador extends Model
             'apellido' => $this->apellido,
             'grado' => $this->grado,
         ];
+    }
+
+    protected function getStatusAttribute()
+    {
+        $estatus = ['Activo','Jubilado','Otro'];
+        return $estatus[$this->estatus - 1];   
     }
 }

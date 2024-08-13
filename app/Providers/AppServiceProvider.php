@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,19 +36,6 @@ class AppServiceProvider extends ServiceProvider
          * @param string $searchword
          * @return array
          */
-        Collection::macro('paginate', function($perPage, $searchword, $total = null, $page = null, $pageName = 'page') {
-            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
-
-            return new LengthAwarePaginator(
-                $this->forPage($page, $perPage),
-                $total ?: $this->count(),
-                $perPage,
-                $page,
-                [
-                    'path' => LengthAwarePaginator::resolveCurrentPath().'?search='.$searchword,
-                    'pageName' => $pageName,
-                ]
-            );
-        });
+        Paginator::useBootstrap();
     }
 }

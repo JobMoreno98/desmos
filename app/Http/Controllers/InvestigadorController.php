@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Investigador;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use \Illuminate\Support\Facades\Request as ResquestPaginate;
 
 class InvestigadorController extends Controller
 {
@@ -14,10 +17,36 @@ class InvestigadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function paginate($items, $perPage = 12, $page = null)
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $total = count($items);
+        $currentpage = $page;
+        $offset = ($currentpage * $perPage) - $perPage ;
+        $itemstoshow = array_slice($items , $offset , $perPage);
+
+
+        return new LengthAwarePaginator($itemstoshow, $total, $perPage, $page,
+            ['path'=> ResquestPaginate::fullUrl()]);
+    }
+
     public function index()
     {
 
-        $investigadores = Investigador::where('activo', '=', 1)->where('estatus', 1)->orderBy('apellido', 'asc')->paginate(12);
+        $investigadores_jubilados = Investigador::where('activo', '=', 1)->where('estatus', '!=', 1)->orderBy('apellido', 'asc')->get();
+
+        $investigadores = Investigador::where('activo', '=', 1)->where('estatus', 1)->orderBy('apellido', 'asc')->get();
+        $investigador = new Investigador();
+        $investigador->nombre = 'Jubilados y finados';
+        $investigador->image = '';
+        $investigador->estatus = 1;
+
+        $investigadores = $investigadores->merge([$investigador]);
+
+        $investigadores = $investigadores->merge($investigadores_jubilados)->toArray();
+        $investigadores = $this->paginate($investigadores);
+
         return view('investigadores.index', compact('investigadores'));
     }
     public function indexAdmin()

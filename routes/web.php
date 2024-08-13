@@ -39,11 +39,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/creditos',function() {
+Route::get('/creditos', function () {
     return view('creditos');
 })->name('creditos');
 
-Route::get('/', function(){
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -53,40 +53,42 @@ Route::get('/', function(){
 
 
 
-Route::get('/investigadores/indexAdmin',[InvestigadorController::class,'indexAdmin'])->name('investigadores.indexAdmin');
-Route::get('/eventos/indexAdmin',[EventoController::class,'indexAdmin'])->name('eventos.indexAdmin');
-Route::get('/libros/indexAdmin',[LibroController::class,'indexAdmin'])->name('libros.indexAdmin');
-Route::get('/articulos/indexAdmin',[ArticuloController::class,'indexAdmin'])->name('articulos.indexAdmin');
-Route::get('/divulgaciones/indexAdmin',[DivulgacionController::class,'indexAdmin'])->name('divulgaciones.indexAdmin');
-Route::get('/quienes-somos/indexAdmin',[QuienesSomosController::class,'indexAdmin'])->name('quienes-somos.indexAdmin');
-Route::get('/contactos/indexAdmin',[ContactoController::class,'indexAdmin'])->name('contactos.indexAdmin');
-Route::get('/usuarios/indexAdmin',[UserController::class,'indexAdmin'])->name('usuarios.indexAdmin');
+Route::get('/investigadores/indexAdmin', [InvestigadorController::class, 'indexAdmin'])->name('investigadores.indexAdmin');
+Route::get('/eventos/indexAdmin', [EventoController::class, 'indexAdmin'])->name('eventos.indexAdmin');
+Route::get('/libros/indexAdmin', [LibroController::class, 'indexAdmin'])->name('libros.indexAdmin');
+Route::get('/articulos/indexAdmin', [ArticuloController::class, 'indexAdmin'])->name('articulos.indexAdmin');
+Route::get('/divulgaciones/indexAdmin', [DivulgacionController::class, 'indexAdmin'])->name('divulgaciones.indexAdmin');
+Route::get('/quienes-somos/indexAdmin', [QuienesSomosController::class, 'indexAdmin'])->name('quienes-somos.indexAdmin');
+Route::get('/contactos/indexAdmin', [ContactoController::class, 'indexAdmin'])->name('contactos.indexAdmin');
+Route::get('/usuarios/indexAdmin', [UserController::class, 'indexAdmin'])->name('usuarios.indexAdmin');
 
 
 
-Route::get('/eventos',[EventoController::class,'index']);
+Route::get('/eventos', [EventoController::class, 'index']);
 
 
 
-Route::resource('investigadores', 'App\Http\Controllers\InvestigadorController');
-Route::resource('/eventos','App\Http\Controllers\EventoController');
-Route::resource('/','App\Http\Controllers\WelcomeController');
-Route::resource('/libros',LibroController::class);
-Route::resource('articulos',ArticuloController::class);
-Route::resource('divulgaciones',DivulgacionController::class);
-Route::resource('publicaciones',PublicacionController::class);
-Route::resource('busqueda',BusquedaController::class);
-Route::resource('quienes-somos',QuienesSomosController::class);
-Route::resource('contactos',ContactoController::class);
-Route::resource('archivos',ArchivoController::class);
-Route::resource('usuarios',UserController::class);
+Route::resource('investigadores', 'App\Http\Controllers\InvestigadorController')->except(['index','show']);
+Route::resource('/eventos', 'App\Http\Controllers\EventoController');
+Route::resource('/', 'App\Http\Controllers\WelcomeController');
+Route::resource('/libros', LibroController::class);
+Route::resource('articulos', ArticuloController::class);
+Route::resource('divulgaciones', DivulgacionController::class);
+Route::resource('publicaciones', PublicacionController::class);
+Route::resource('busqueda', BusquedaController::class);
+Route::resource('quienes-somos', QuienesSomosController::class);
+Route::resource('contactos', ContactoController::class);
+Route::resource('archivos', ArchivoController::class);
+Route::resource('usuarios', UserController::class);
+
+Route::get('/investigadores', [InvestigadorController::class, 'index'])->name('investigadores.index');
 
 
-Route::get('eventos/{evento}',[EventoController::class,'show'])->name('eventos.show'); 
-Route::get('divulgaciones/{divulgacion}',[EventoController::class,'show'])->name('divulgaciones.show'); 
-Route::get('investigadores/{investigador}',[InvestigadorController::class,'show'])->name('investigadores.show'); 
-Route::get('libros/{libro}',[LibroController::class,'show'])->name('libros.show');
-Route::get('articulos/{articulo}',[ArticuloController::class,'show'])->name('articulos.show'); 
+Route::get('eventos/{evento}', [EventoController::class, 'show'])->name('eventos.show');
+Route::get('divulgaciones/{divulgacion}', [EventoController::class, 'show'])->name('divulgaciones.show');
+Route::get('investigadores/{investigador}', [InvestigadorController::class, 'show'])->name('investigadores.show');
+Route::get('libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
+Route::get('articulos/{articulo}', [ArticuloController::class, 'show'])->name('articulos.show');
 
 
 Route::get('/images/investigadores/{filename}', array(
