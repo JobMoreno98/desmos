@@ -117,7 +117,6 @@
 
                     ]
                 })
-                loader(false);
             });
 
 
@@ -168,7 +167,7 @@
                     return ((a < b) ? 1 : ((a > b) ? -1 : 0));
                 }
             });
-            //"columnDefs": [{ type: 'portugues', targets: "_all" }],            
+            //"columnDefs": [{ type: 'portugues', targets: "_all" }],
         </script>
     @else
         Acceso No válido

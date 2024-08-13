@@ -89,10 +89,10 @@
                     <a class="section-scroll nav-link"  href="{{route('contactos.index')}}">Contacto</a></a>
                 </li>
 
-                
+
             </ul>
 
-                
+
             <form class="form-inline my-2 my-lg-0" action="{{route('busqueda.index')}}" enctype="multipart/form-data">
                 <input name="search" class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" autocomplete="off">
                 <button class="btn bg-dark my-2 my-sm-0" type="submit">Buscar</button>
@@ -101,7 +101,7 @@
     </nav>
     <img class="img-fluid img-homeDesmos" src="{{asset('/images/desmos.jpg')}}">
 
-    
+
     @yield('content')
 
 
@@ -128,7 +128,7 @@
                 <div class="col-sm-6">
                     <p class="copyright font-alt"><a target="_blank" href="https://www.udg.mx">Universidad de Guadalajara</a></p>
                 </div>
-                
+
             </div>
         </div>
     </footer>
@@ -154,7 +154,6 @@ JavaScripts
 <script src="{{asset('/lib/smoothscroll.js')}}"></script>
 {{-- <script src="../public/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
 <script src="../public/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script> --}}
-<script src="{{asset('/js/plugins.js')}}"></script>
 <script src="{{asset('/js/main.js')}}"></script>
 
 

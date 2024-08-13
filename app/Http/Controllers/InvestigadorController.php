@@ -46,7 +46,6 @@ class InvestigadorController extends Controller
 
         $investigadores = $investigadores->merge($investigadores_jubilados)->toArray();
         $investigadores = $this->paginate($investigadores);
-
         return view('investigadores.index', compact('investigadores'));
     }
     public function indexAdmin()
@@ -88,7 +87,7 @@ class InvestigadorController extends Controller
                     </div>
                     <div class="modal-body">
                       <p class="text-primary">
-                        <small> 
+                        <small>
                             ' . $value['id'] . '. ' . $value['nombre'] . ' ' . $value['apellido'] . '                 </small>
                       </p>
                     </div>

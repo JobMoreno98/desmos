@@ -33,7 +33,7 @@
                             </div>
                             <br>
                             <button type="button" class="btn btn-info btnModal" data-toggle="modal"
-                                data-target="#modalInvest" onclick="modal([{{ json_encode($investigador) }}])">Info</button>
+                                data-target="#modalInvest" onclick="modal({{ json_encode($investigador) }})">Info</button>
                         @endif
 
                     </div>
@@ -44,26 +44,50 @@
 
             </div>
         </div>
-        {!! $investigadores->links() !!}
+        <div class="d-flex justify-content-center ">
+            {{ $investigadores->links() }}
+
+        </div>
 
     </div>
-@endsection
 
-@section('js')
     <script>
-        $(document).ready(function() {
-            $(document).on('click', '.page-link', function(event) {
-                event.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
-                console.log("PAGE: " + page)
-            });
-        });
+        function isset(ref) {
+            return ref !== null
+        }
 
         function modal(item) {
 
+            const image = "{{ asset('images/investigadores/') }}" + "/" + item['image']
+
+            document.getElementById('img').src = image
+
+            nombre = document.getElementById('nombre')
+
+            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] : 'No disponible'
+
+            reconocimientos = document.getElementById('reconocimientos')
+
+            reconocimientos.innerHTML = isset(item['reconocimientos']) ? item['reconocimientos'] : 'No disponible'
+
+            proyecto_invest = document.getElementById('proyecto_invest')
+
+            proyecto_invest.innerHTML = isset(item['proyecto_invest']) ? item['proyecto_invest'] : 'No disponible'
+
+            document.getElementById('publicaciones').innerHTML = isset(item['publicaciones']) ? item['publicaciones'] :
+                'No disponible'
+
+            document.getElementById('correo').innerHTML = isset(item['correo']) ? item['correo'] : 'No disponible'
+
+            document.getElementById('grado').innerHTML = isset(item['grado']) ? item['grado'] : 'No disponible'
+
+            document.getElementById('lineasInves').innerHTML = isset(item['lineasInves']) ? item['lineasInves'] :
+                'No disponible'
         }
     </script>
 @endsection
+
+
 
 
 @section('modal')
@@ -73,7 +97,7 @@
                 <div class="modal-header">
                     <div class="img-border-rounded">
 
-                        <img src="" />
+                        <img id="img" src="" />
 
                     </div>
                     <h1 id="nombre"></h1><br>
