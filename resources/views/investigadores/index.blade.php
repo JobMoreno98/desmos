@@ -10,13 +10,12 @@
         <div class="row justify-content-center my-2">
             @foreach ($investigadores as $investigador)
                 <div class="col-md-3 col-sm-10 my-2">
-                    <div class="p-3 investigador-card w-100 d-flex align-items-center justify-content-center"
-                        style="min-height: 100%;">
-
+                    <div class="p-3 investigador-card w-100 d-flex align-items-center justify-content-center" style="height: 100%;">
                         @if ($investigador['nombre'] == 'Jubilados y finados')
-                            <div class="investigadores-card--info ">
-                                <h5 class="text-uppercase">{{ $investigador['nombre'] }}</h5>
-
+                            <div class="investigadores-card--info border p-5 border-bottom border-dark w-100 rounded shadow"
+                                style="height: 100%;display: flex; align-items: center;">
+                                <h5 class="text-uppercase py-2 border-bottom border-dark ">{{ $investigador['nombre'] }}
+                                </h5>
                             </div>
                         @else
                             <div class="img-border-rounded">
@@ -40,15 +39,10 @@
 
                 </div>
             @endforeach
-            <div id="contenedor">
-
-            </div>
         </div>
         <div class="d-flex justify-content-center ">
             {{ $investigadores->links() }}
-
         </div>
-
     </div>
 
     <script>
@@ -58,7 +52,7 @@
 
         function modal(item) {
 
-            const image = "{{ asset('images/investigadores/') }}" + "/" + item['image']
+            const image = "{{ asset('storage/images/investigadores/') }}" + "/" + item['image']
 
             document.getElementById('img').src = image
 
@@ -86,8 +80,6 @@
         }
     </script>
 @endsection
-
-
 
 
 @section('modal')
