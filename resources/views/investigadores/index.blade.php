@@ -10,11 +10,13 @@
         <div class="row justify-content-center my-2">
             @foreach ($investigadores as $investigador)
                 <div class="col-md-3 col-sm-10 my-2">
-                    <div class="p-3 investigador-card w-100 d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <div class="p-3 investigador-card w-100 h-100 d-flex align-items-center justify-content-center {{ $investigador['nombre'] == 'Jubilados y finados' ? 'piso' : '' }}"
+                        >
                         @if ($investigador['nombre'] == 'Jubilados y finados')
-                            <div class="investigadores-card--info border p-5 border-bottom border-dark w-100 rounded shadow"
-                                style="height: 100%;display: flex; align-items: center;">
-                                <h5 class="text-uppercase py-2 border-bottom border-dark ">{{ $investigador['nombre'] }}
+                            <div class="h-100 investigadores-card--info p-5 w-100 rounded shadow "
+                                style="background: #edf2f4;color: #000;height: 100%;display: flex; align-items: center;border:2px solid #b13124;">
+                                <h5 class="text-uppercase py-2" style="border-bottom:2px solid #b13124;">
+                                    {{ $investigador['nombre'] }}
                                 </h5>
                             </div>
                         @else
@@ -25,7 +27,7 @@
                             </div>
                             <div class="investigadores-card--info">
                                 <h4>{{ $investigador['nombre'] . ' ' . $investigador['apellido'] }}</h4>
-                                <h5>Estado: {{ $investigador['status'] }}</h5>
+                               
                                 <h5>{{ $investigador['grado'] }}</h5>
                                 <h6>Linea de investigación: <i>{{ substr($investigador['lineasInves'], 0, 63) . '...' }}</i>
                                 </h6>
@@ -58,7 +60,7 @@
 
             nombre = document.getElementById('nombre')
 
-            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] : 'No disponible'
+            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] + "<br/>" + item['status'] : 'No disponible'
 
             reconocimientos = document.getElementById('reconocimientos')
 
@@ -77,6 +79,8 @@
 
             document.getElementById('lineasInves').innerHTML = isset(item['lineasInves']) ? item['lineasInves'] :
                 'No disponible'
+
+                
         }
     </script>
 @endsection
@@ -92,7 +96,8 @@
                         <img id="img" src="" />
 
                     </div>
-                    <h1 id="nombre"></h1><br>
+                    
+                    <h2 id="nombre"></h2>
                 </div>
                 <div class="modal-body">
                     <div class="informacionModal">

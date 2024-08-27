@@ -114,9 +114,9 @@
                                 <select name="estatus" id="" class="form-control">
                                     <option disabled selected>Elegir...</option>
                                     <option value="1">Activo</option>
-                                    <option value="2">Jubilado
-                                    </option>
-                                    <option value="3">Otro</option>
+                                    <option value="2">Jubilado(a)</option>
+                                    <option value="3">Finado(a)</option>
+                                    <option value="4">Otro</option>
                                 </select>
                             </div>
 
