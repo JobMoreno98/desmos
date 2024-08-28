@@ -10,8 +10,8 @@
         <div class="row justify-content-center my-2">
             @foreach ($investigadores as $investigador)
                 <div class="col-md-3 col-sm-10 my-2">
-                    <div class="p-3 investigador-card w-100 h-100 d-flex align-items-center justify-content-center {{ $investigador['nombre'] == 'Jubilados y finados' ? 'piso' : '' }}"
-                        >
+                    <div
+                        class="p-3 investigador-card w-100 h-100 d-flex align-items-center justify-content-center {{ $investigador['nombre'] == 'Jubilados y finados' ? 'piso' : '' }}">
                         @if ($investigador['nombre'] == 'Jubilados y finados')
                             <div class="h-100 investigadores-card--info p-5 w-100 rounded shadow "
                                 style="background: #edf2f4;color: #000;height: 100%;display: flex; align-items: center;border:2px solid #b13124;">
@@ -27,7 +27,7 @@
                             </div>
                             <div class="investigadores-card--info">
                                 <h4>{{ $investigador['nombre'] . ' ' . $investigador['apellido'] }}</h4>
-                               
+
                                 <h5>{{ $investigador['grado'] }}</h5>
                                 <h6>Linea de investigación: <i>{{ substr($investigador['lineasInves'], 0, 63) . '...' }}</i>
                                 </h6>
@@ -60,7 +60,8 @@
 
             nombre = document.getElementById('nombre')
 
-            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] + "<br/>" + item['status'] : 'No disponible'
+            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] + "<br/>Estado: " + item['status'] :
+                'No disponible'
 
             reconocimientos = document.getElementById('reconocimientos')
 
@@ -80,7 +81,7 @@
             document.getElementById('lineasInves').innerHTML = isset(item['lineasInves']) ? item['lineasInves'] :
                 'No disponible'
 
-                
+
         }
     </script>
 @endsection
@@ -92,12 +93,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="img-border-rounded">
-
                         <img id="img" src="" />
-
                     </div>
-                    
-                    <h2 id="nombre"></h2>
+
+                    <p id="nombre" style="font-size:16pt;"></p>
                 </div>
                 <div class="modal-body">
                     <div class="informacionModal">
