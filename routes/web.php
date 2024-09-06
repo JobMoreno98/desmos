@@ -64,7 +64,7 @@ Route::get('/usuarios/indexAdmin', [UserController::class, 'indexAdmin'])->name(
 
 
 
-Route::get('/eventos', [EventoController::class, 'index']);
+Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
 
 
 

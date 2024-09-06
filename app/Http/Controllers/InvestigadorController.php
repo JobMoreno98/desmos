@@ -140,7 +140,6 @@ class InvestigadorController extends Controller
             'apellido' => 'required',
             'linea_investigacion' => 'required',
             'grado' => 'required',
-            'correo' => 'required',
             'publicaciones' => 'required',
             'image' => 'image|max:5120',
             'estatus' => 'required'
@@ -165,9 +164,6 @@ class InvestigadorController extends Controller
 
             $investigador->image = $image_path;
         }
-
-
-
         $investigador->save();
         return redirect()->route('investigadores.create')->with(array(
             'message' => 'El investigador se guardó correctamente'
@@ -185,18 +181,6 @@ class InvestigadorController extends Controller
         if ($investigador) {
             $investigador->activo = 0;
             $investigador->update();
-            // //
-            //     $log = new Log();
-            //     $log->tabla = "areas";
-            //     $mov="";
-            //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
-            //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
-            //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
-            //     $log->movimiento = $mov;
-            //     $log->usuario_id = Auth::user()->id;
-            //     $log->acciones = "Borrado";
-            //     $log->save();
-            //
             return redirect()->route('investigadores.indexAdmin')->with(array(
                 "message" => "El investigador se ha eliminado correctamente"
             ));
@@ -246,7 +230,6 @@ class InvestigadorController extends Controller
             'apellido' => 'required',
             'linea_investigacion' => 'required',
             'grado' => 'required',
-            'correo' => 'required',
             'publicaciones' => 'required',
             'image' => 'image|max:5120',
             'estatus' => 'required'

@@ -60,33 +60,35 @@
 
             nombre = document.getElementById('nombre')
 
-            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] : 'No disponible'
+            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] : ''
 
             reconocimientos = document.getElementById('reconocimientos')
 
-            reconocimientos.innerHTML = isset(item['reconocimientos']) ? item['reconocimientos'] : 'No disponible'
+            reconocimientos.innerHTML = isset(item['reconocimientos']) ? "<b>Reconocimientos: </b> " + item[
+                'reconocimientos'] : ''
 
             proyecto_invest = document.getElementById('proyecto_invest')
 
-            proyecto_invest.innerHTML = isset(item['proyecto_invest']) ? item['proyecto_invest'] : 'No disponible'
+            proyecto_invest.innerHTML = isset(item['proyecto_invest']) ? " <b>Proyecto de investigación en proceso: </b> " +
+                item['proyecto_invest'] : ''
 
-            document.getElementById('publicaciones').innerHTML = isset(item['publicaciones']) ? item['publicaciones'] :
-                'No disponible'
+            document.getElementById('publicaciones').innerHTML = isset(item['publicaciones']) ? "<b>Publicaciones: </b>" +
+                item['publicaciones'] :
+                ''
 
-            document.getElementById('correo').innerHTML = isset(item['correo']) ? item['correo'] : 'No disponible'
+            document.getElementById('correo').innerHTML = isset(item['correo']) ? "<b>Contacto: </b>" + item['correo'] : ''
 
-            document.getElementById('grado').innerHTML = isset(item['grado']) ? item['grado'] : 'No disponible'
+            document.getElementById('grado').innerHTML = isset(item['grado']) ? " <b>Grado: </b>" + item['grado'] : ''
 
-            document.getElementById('lineasInves').innerHTML = isset(item['lineasInves']) ? item['lineasInves'] :
-                'No disponible'
+            document.getElementById('lineasInves').innerHTML = isset(item['lineasInves']) ?
+                "<b>Lineas de investigación: </b>" + item['lineasInves'] :
+                ''
 
             if (item['estatus'] !== 1) {
 
-                console.log(item);
-
                 document.getElementById('estatus').innerHTML = isset(item['estatus']) ? "<b>Estatus:</b> " + item[
                         'status'] :
-                    'No disponible'
+                    ''
             } else {
                 document.getElementById('estatus').innerHTML = ''
             }
@@ -110,28 +112,28 @@
                 <div class="modal-body">
                     <div class="informacionModal">
                         <div class="modal-info--item">
-                            <b>Reconocimientos: </b> <span id="reconocimientos"></span>
+                            <span id="reconocimientos"></span>
                         </div>
 
                         <div class="modal-info--item">
-                            <b>Proyecto de investigación en proceso: </b>
+
                             <span id="proyecto_invest"></span>
                         </div>
 
                         <div class="modal-info--item">
-                            <b>Publicaciones: </b>
+
                             <span id="publicaciones"></span>
                         </div>
                         <div class="modal-info--item">
-                            <b>Contacto: </b>
+
                             <span id="correo"></span>
                         </div>
                         <div class="modal-info--item">
-                            <b>Grado: </b>
+
                             <span id="grado"></span>
                         </div>
                         <div class="modal-info--item">
-                            <b>Lineas de investigación: </b>
+
                             <span id="lineasInves"></span>
                         </div>
                         <div>

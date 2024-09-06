@@ -19,33 +19,33 @@ class UserController extends Controller
     }
     public function indexAdmin()
     {
-        $vsusuarios = User::where('activo','=',1)->get();
+        $vsusuarios = User::where('activo', '=', 1)->get();
         $usuarios = $this->cargarDT($vsusuarios);
-        return view('usuarios.indexAdmin',compact('usuarios'));
+        return view('usuarios.indexAdmin', compact('usuarios'));
     }
     public function cargarDT($consulta)
     {
         $usuario = [];
 
-        foreach ($consulta as $key => $value){
+        foreach ($consulta as $key => $value) {
 
-            $ruta = "eliminar".$value['id'];
+            $ruta = "eliminar" . $value['id'];
             $eliminar = route('delete-usuario', $value['id']);
             $actualizar =  route('usuarios.edit', $value['id']);
-         
+
 
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" role="button" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '" role="button" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
-                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -57,12 +57,12 @@ class UserController extends Controller
                     <div class="modal-body">
                       <p class="text-primary">
                         <small> 
-                            '.$value['id'].'. '.$value['name'].'                 </small>
+                            ' . $value['id'] . '. ' . $value['name'] . '                 </small>
                       </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
                     </div>
                   </div>
                 </div>
@@ -70,12 +70,10 @@ class UserController extends Controller
             ';
 
             $libro[$key] = array(
-                $acciones,
-                $value['id'],
                 $value['name'],
                 $value['email'],
+                $acciones,
             );
-
         }
 
         return $libro;
@@ -99,7 +97,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request,[
+        $validateData = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -115,10 +113,8 @@ class UserController extends Controller
 
 
         return redirect()->route('usuarios.indexAdmin')->with(array(
-            'message'=>'El usuario se creó correctamente'
+            'message' => 'El usuario se creó correctamente'
         ));
-
-
     }
 
     /**
@@ -141,7 +137,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $usuario = User::find($id);
-        return view('usuarios.edit',compact('usuario'));
+        return view('usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -153,7 +149,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
+        $validateData = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['max:255', 'unique:users'],
         ]);
@@ -161,7 +157,7 @@ class UserController extends Controller
         $usuario = User::find($id);
         $usuario->name = $request->input('name');
         $email = $request->input('email');
-        if($email){
+        if ($email) {
             $usuario->email = $email;
         }
         $usuario->rol = $request->input('rol');
@@ -170,35 +166,35 @@ class UserController extends Controller
 
 
         return redirect()->route('usuarios.indexAdmin')->with(array(
-            'message'=>'El usuario se actualizó correctamente'
+            'message' => 'El usuario se actualizó correctamente'
         ));
     }
-    public function delete_evento($usuario_id){
+    public function delete_evento($usuario_id)
+    {
         $usuario = User::find($usuario_id);
-        if($usuario){
+        if ($usuario) {
             $usuario->activo = 0;
             $usuario->update();
-	    // //
-        //     $log = new Log();
-        //     $log->tabla = "areas";
-        //     $mov="";
-        //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
-        //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
-        //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
-        //     $log->movimiento = $mov;
-        //     $log->usuario_id = Auth::user()->id;
-        //     $log->acciones = "Borrado";
-        //     $log->save();
+            // //
+            //     $log = new Log();
+            //     $log->tabla = "areas";
+            //     $mov="";
+            //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
+            //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
+            //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
+            //     $log->movimiento = $mov;
+            //     $log->usuario_id = Auth::user()->id;
+            //     $log->acciones = "Borrado";
+            //     $log->save();
             //
             return redirect()->route('usuarios.indexAdmin')->with(array(
-               "message" => "El usuario se ha eliminado correctamente"
+                "message" => "El usuario se ha eliminado correctamente"
             ));
-        }else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "El usuario que trata de eliminar no existe"
+                "message" => "El usuario que trata de eliminar no existe"
             ));
         }
-
     }
 
     /**
