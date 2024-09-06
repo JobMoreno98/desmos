@@ -19,39 +19,37 @@ class EventoController extends Controller
      */
     public function index()
     {
-        $eventos = Evento::where('activo','=',1)->where('is_solo_noticia','=',0)->orderBy('fecha','desc')->paginate(8);
-        return view('eventos.index',compact('eventos'));
+        $eventos = Evento::where('activo', '=', 1)->where('is_solo_noticia', '=', 0)->orderBy('fecha', 'desc')->paginate(8);
+        return view('eventos.index', compact('eventos'));
     }
 
     public function indexAdmin()
     {
-        $vsevento = Evento::where('activo','=',1)->get();
+        $vsevento = Evento::where('activo', '=', 1)->get();
         $eventos = $this->cargarDT($vsevento);
-        return view('eventos.indexAdmin',compact('eventos'));
+        return view('eventos.indexAdmin', compact('eventos'));
     }
     public function cargarDT($consulta)
     {
         $evento = [];
 
-        foreach ($consulta as $key => $value){
+        foreach ($consulta as $key => $value) {
 
-            $ruta = "eliminar".$value['id'];
+            $ruta = "eliminar" . $value['id'];
             $eliminar = route('delete-evento', $value['id']);
             $actualizar =  route('eventos.edit', $value['id']);
-         
-
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" role="button" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '" role="button" class="btn btn-success m-1 w-100 " title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="#' . $ruta . '" role="button" class="btn btn-danger m-1 w-100" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
-                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -63,12 +61,12 @@ class EventoController extends Controller
                     <div class="modal-body">
                       <p class="text-primary">
                         <small> 
-                            '.$value['id'].'. '.$value['titulo'].'                 </small>
+                            ' . $value['id'] . '. ' . $value['titulo'] . '                 </small>
                       </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
                     </div>
                   </div>
                 </div>
@@ -76,13 +74,11 @@ class EventoController extends Controller
             ';
 
             $evento[$key] = array(
-                $acciones,
-                $value['id'],
                 $value['titulo'],
                 $value['fecha'],
-                $value['descripcion'],
+                substr($value['descripcion'],0,200),
+                $acciones,
             );
-
         }
 
         return $evento;
@@ -107,25 +103,22 @@ class EventoController extends Controller
     public function store(Request $request)
     {
         //
-        $validateData = $this->validate($request,[
-            'titulo'=>'required',
-            'descripcion'=>'required',
-            'fecha'=>'required',
-            'image'=>'image|max:5120',
+        $validateData = $this->validate($request, [
+            'titulo' => 'required',
+            'descripcion' => 'required',
+            'fecha' => 'required',
+            'image' => 'image|max:5120',
 
         ]);
-        
+
         $evento = new Evento();
         $evento->titulo = $request->input('titulo');
         $evento->descripcion = $request->input('descripcion');
-        if($request->input('is_solo_noticia')){
+        if ($request->input('is_solo_noticia')) {
 
             $evento->is_solo_noticia = 1;
-        }
-        else{
+        } else {
             $evento->is_solo_noticia = 0;
-
-
         }
 
         $evento->fecha = $request->input('fecha');
@@ -133,69 +126,70 @@ class EventoController extends Controller
 
 
         $image = $request->file('imagen');
-        if($image){
-           $image_path = time().$image->getClientOriginalName();
-           \Storage::disk('images-eventos')->put($image_path, \File::get($image));
-        
-           $evento->image = $image_path;
+        if ($image) {
+            $image_path = time() . $image->getClientOriginalName();
+            \Storage::disk('images-eventos')->put($image_path, \File::get($image));
+
+            $evento->image = $image_path;
         }
         $evento->save();
 
         $files = $request->file('files');
 
-        if($files){
-            foreach($files as $file){
+        if ($files) {
+            foreach ($files as $file) {
 
                 $archivo = new Archivo();
                 // $archivo->evento_id = $evento->id;
-                $file_path = time().$file->getClientOriginalName();
+                $file_path = time() . $file->getClientOriginalName();
                 \Storage::disk('files')->put($file_path, \File::get($file));
                 $data[] = $file_path;
-         
+
                 $archivo->path = $file_path;
                 $evento->archivos()->save($archivo);
                 $evento->refresh();
             }
         }
 
-        
-        
+
+
         return redirect()->route('eventos.create')->with(array(
-            'message'=>'El evento se guardó correctamente'
+            'message' => 'El evento se guardó correctamente'
         ));
         // return $evento->archivos;
     }
-    public function getImage($filename){
+    public function getImage($filename)
+    {
         $file = Storage::disk('images-eventos')->get($filename);
         return new Response($file, 200);
     }
 
-    public function delete_evento($evento_id){
+    public function delete_evento($evento_id)
+    {
         $evento = Evento::find($evento_id);
-        if($evento && Auth::user()->rol == 'admin'){
+        if ($evento && Auth::user()->rol == 'admin') {
             $evento->activo = 0;
             $evento->update();
-	    // //
-        //     $log = new Log();
-        //     $log->tabla = "areas";
-        //     $mov="";
-        //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
-        //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
-        //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
-        //     $log->movimiento = $mov;
-        //     $log->usuario_id = Auth::user()->id;
-        //     $log->acciones = "Borrado";
-        //     $log->save();
+            // //
+            //     $log = new Log();
+            //     $log->tabla = "areas";
+            //     $mov="";
+            //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
+            //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
+            //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
+            //     $log->movimiento = $mov;
+            //     $log->usuario_id = Auth::user()->id;
+            //     $log->acciones = "Borrado";
+            //     $log->save();
             //
             return redirect()->route('eventos.indexAdmin')->with(array(
-               "message" => "El evento se ha eliminado correctamente"
+                "message" => "El evento se ha eliminado correctamente"
             ));
-        }else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "El evento que trata de eliminar no existe"
+                "message" => "El evento que trata de eliminar no existe"
             ));
         }
-
     }
 
     /**
@@ -206,8 +200,8 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        $archivos = $evento->archivos()->where('activo',1)->get();
-        return view('eventos.show',compact('evento','archivos'));
+        $archivos = $evento->archivos()->where('activo', 1)->get();
+        return view('eventos.show', compact('evento', 'archivos'));
     }
 
     /**
@@ -219,8 +213,8 @@ class EventoController extends Controller
     public function edit($id)
     {
         $evento = Evento::find($id);
-        $archivos = $evento->archivos()->where('activo',1)->get();
-        return view('eventos.edit',compact('evento','archivos'));
+        $archivos = $evento->archivos()->where('activo', 1)->get();
+        return view('eventos.edit', compact('evento', 'archivos'));
     }
 
     /**
@@ -232,59 +226,56 @@ class EventoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
-            'titulo'=>'required',
-            'descripcion'=>'required',
-            'fecha'=>'required',
-            'image'=>'image|max:5120',
+        $validateData = $this->validate($request, [
+            'titulo' => 'required',
+            'descripcion' => 'required',
+            'fecha' => 'required',
+            'image' => 'image|max:5120',
         ]);
 
         $evento = Evento::find($id);
         $evento->titulo = $request->input('titulo');
         $evento->descripcion = $request->input('descripcion');
         $evento->fecha = $request->input('fecha');
-        if($request->input('is_solo_noticia')){
+        if ($request->input('is_solo_noticia')) {
 
             $evento->is_solo_noticia = 1;
-        }
-        else{
+        } else {
             $evento->is_solo_noticia = 0;
-
-
         }
 
 
 
         $image = $request->file('imagen');
-        if($image){
-           $image_path = time().$image->getClientOriginalName();
-           \Storage::disk('images-eventos')->put($image_path, \File::get($image));
-        
-           $evento->image = $image_path;
+        if ($image) {
+            $image_path = time() . $image->getClientOriginalName();
+            \Storage::disk('images-eventos')->put($image_path, \File::get($image));
+
+            $evento->image = $image_path;
         }
 
         $files = $request->file('files');
 
-        if($files){
-            foreach($files as $file){
+        if ($files) {
+            foreach ($files as $file) {
 
                 $archivo = new Archivo();
                 // $archivo->evento_id = $evento->id;
-                $file_path = time().$file->getClientOriginalName();
+                $file_path = time() . $file->getClientOriginalName();
                 \Storage::disk('files')->put($file_path, \File::get($file));
                 $data[] = $file_path;
-         
+
                 $archivo->path = $file_path;
                 $evento->archivos()->save($archivo);
                 $evento->refresh();
             }
         }
 
-        
+
 
         $evento->update();
         return redirect()->route('eventos.indexAdmin')->with(array(
-            'message'=>'El evento se actualizó correctamente'
+            'message' => 'El evento se actualizó correctamente'
         ));
     }
 

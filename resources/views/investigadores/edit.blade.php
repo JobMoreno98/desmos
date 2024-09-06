@@ -114,14 +114,21 @@
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-3" >
+                            <div class="col-sm-12 col-md-3">
                                 <label class="font-weight-bold" for="">* Estatus:</label>
                                 <select name="estatus" id="" class="form-control">
                                     <option disabled>Elegir...</option>
-                                    <option {{($investigador->estatus==1)?'selected':''}} value="1">Activo</option>
-                                    <option {{($investigador->estatus==2)?'selected':''}} value="2">Jubilado(a)</option>
-                                    <option {{($investigador->estatus==3)?'selected':''}} value="2">Finado(a)</option>
-                                    <option {{($investigador->estatus==4)?'selected':''}} value="3">Otro</option>
+                                    <option {{ $investigador->estatus == 1 ? 'selected' : '' }} value="1">Activo
+                                    </option>
+                                    <option {{ $investigador->estatus == 2 ? 'selected' : '' }} value="2">Jubilado(a)
+                                    </option>
+                                    <option {{ $investigador->estatus == 3 ? 'selected' : '' }} value="3">Finado(a)
+                                    </option>
+                                    <option {{ $investigador->estatus == 4 ? 'selected' : '' }} value="4">Cambio de
+                                        Adscripción
+                                    </option>
+                                    <option {{ $investigador->estatus == 5 ? 'selected' : '' }} value="5">Otro
+                                    </option>
                                 </select>
                             </div>
 

@@ -23,7 +23,7 @@ class Investigador extends Model
 
     protected function getStatusAttribute()
     {
-        $estatus = ['Activo','Jubilado','Otro'];
-        return $estatus[$this->estatus - 1];   
+        $estatus = ['Activo', 'Jubilado(a)', 'Finado(a)', 'Cambio de Adscripción', 'Otro'];
+        return $estatus[$this->estatus - 1];
     }
 }

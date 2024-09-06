@@ -60,8 +60,7 @@
 
             nombre = document.getElementById('nombre')
 
-            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] + "<br/>Estado: " + item['status'] :
-                'No disponible'
+            nombre.innerHTML = isset(item['nombre']) ? item['nombre'] + " " + item['apellido'] : 'No disponible'
 
             reconocimientos = document.getElementById('reconocimientos')
 
@@ -81,6 +80,16 @@
             document.getElementById('lineasInves').innerHTML = isset(item['lineasInves']) ? item['lineasInves'] :
                 'No disponible'
 
+            if (item['estatus'] !== 1) {
+
+                console.log(item);
+
+                document.getElementById('estatus').innerHTML = isset(item['estatus']) ? "<b>Estatus:</b> " + item[
+                        'status'] :
+                    'No disponible'
+            } else {
+                document.getElementById('estatus').innerHTML = ''
+            }
 
         }
     </script>
@@ -124,6 +133,9 @@
                         <div class="modal-info--item">
                             <b>Lineas de investigación: </b>
                             <span id="lineasInves"></span>
+                        </div>
+                        <div>
+                            <p id="estatus"></p>
                         </div>
 
 

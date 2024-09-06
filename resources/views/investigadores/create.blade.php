@@ -116,7 +116,8 @@
                                     <option value="1">Activo</option>
                                     <option value="2">Jubilado(a)</option>
                                     <option value="3">Finado(a)</option>
-                                    <option value="4">Otro</option>
+                                    <option value="4">Cambio de Adscripción</option>
+                                    <option value="5">Otro</option>
                                 </select>
                             </div>
 
