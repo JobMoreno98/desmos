@@ -45,7 +45,9 @@ class InvestigadorController extends Controller
         $investigadores = $investigadores->merge([$investigador]);
 
         $investigadores = $investigadores->merge($investigadores_jubilados)->toArray();
+
         $investigadores = $this->paginate($investigadores);
+
         return view('investigadores.index', compact('investigadores'));
     }
     public function indexAdmin()

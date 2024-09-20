@@ -26,4 +26,9 @@ class Investigador extends Model
         $estatus = ['Activo', 'Jubilado(a)', 'Finado(a)', 'Cambio de Adscripción', 'Otro'];
         return $estatus[$this->estatus - 1];
     }
+    public function getRouteAttribute()
+    {
+        $ruta = route('investigadores.show', $this->id);
+        return $ruta;
+    }
 }

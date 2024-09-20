@@ -36,6 +36,11 @@ class Evento extends Model
     public function archivos(){
         return $this->hasMany(Archivo::class);
     }
+    public function getRouteAttribute()
+    {
+        $ruta = route('eventos.show', $this->id);
+        return $ruta;
+    }
  
 }
 

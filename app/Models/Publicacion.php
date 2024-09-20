@@ -11,8 +11,8 @@ class Publicacion extends Model
 {
     // use HasFactory;
     use Searchable;
-    protected $table ='publicacions';
-    
+    protected $table = 'publicacions';
+
     public function toSearchableArray()
     {
 
@@ -21,7 +21,20 @@ class Publicacion extends Model
             'descripcion' => $this->descripcion,
         ];
     }
-    public function archivos(){
+    public function archivos()
+    {
         return $this->hasMany(Archivo::class);
+    }
+    public function getRouteAttribute()
+    {
+        if ($this->categoria == 3)
+            $route = 'divulgaciones.show';
+        elseif ($this->categoria == 2) {
+            $route = 'articulos.show';
+        } else {
+            $route = 'libros.show';
+        }
+        $ruta = route($route, $this->id);
+        return $ruta;
     }
 }
