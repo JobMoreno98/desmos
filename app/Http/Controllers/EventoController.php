@@ -28,7 +28,7 @@ class EventoController extends Controller
         $vsevento = Evento::where('activo', '=', 1)->get();
 
         $eventos = $this->cargarDT($vsevento);
-        
+
         return view('eventos.indexAdmin', compact('eventos'));
     }
     public function cargarDT($consulta)
@@ -40,7 +40,7 @@ class EventoController extends Controller
             $eliminar = route('delete-evento', $value->id);
             $actualizar = route('eventos.edit', $value->id);
 
-            $acciones = view('eventos.partials.acciones', compact('value', 'ruta', 'eliminar', 'actualizar'))->render();
+            $acciones = view('partials.acciones', compact('value', 'ruta', 'eliminar', 'actualizar'))->render();
 
             $evento[$key] = [
                 'titulo' => $value->titulo,

@@ -23,12 +23,17 @@ class InvestigadorController extends Controller
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $total = count($items);
         $currentpage = $page;
-        $offset = ($currentpage * $perPage) - $perPage ;
-        $itemstoshow = array_slice($items , $offset , $perPage);
+        $offset = ($currentpage * $perPage) - $perPage;
+        $itemstoshow = array_slice($items, $offset, $perPage);
 
 
-        return new LengthAwarePaginator($itemstoshow, $total, $perPage, $page,
-            ['path'=> ResquestPaginate::fullUrl()]);
+        return new LengthAwarePaginator(
+            $itemstoshow,
+            $total,
+            $perPage,
+            $page,
+            ['path' => ResquestPaginate::fullUrl()]
+        );
     }
 
     public function index()
@@ -63,44 +68,12 @@ class InvestigadorController extends Controller
         foreach ($consulta as $key => $value) {
 
             $ruta = "eliminar" . $value['id'];
-            $eliminar = route('delete-investigador', $value['id']);
-            $actualizar =  route('investigadores.edit', $value['id']);
+            $eliminar = route('delete-investigador', $value->id);
+            $actualizar =  route('investigadores.edit', $value->id);
 
 
-            $acciones = '
-                <div class="btn-acciones">
-                    <div class="btn-circle d-flex">
-                        <a href="' . $actualizar . '" role="button" class="btn btn-success m-1" title="Actualizar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="#' . $ruta . '" role="button" class="btn btn-danger m-1" data-toggle="modal" title="Eliminar">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este investigador?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-primary">
-                        <small>
-                            ' . $value['id'] . '. ' . $value['nombre'] . ' ' . $value['apellido'] . '                 </small>
-                      </p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ';
+            $acciones = view('partials.acciones', compact('value', 'ruta', 'eliminar', 'actualizar'))->render();
+
 
             $investigador[$key] = array(
                 $value['nombre'],

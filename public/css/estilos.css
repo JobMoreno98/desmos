@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /*background: linear-gradient(135deg, #6366f1);*/ 
+    /*background: linear-gradient(135deg, #6366f1);*/
     background: #b13124;
 }
 
@@ -42,26 +42,48 @@ body {
     color: #fff;
 }
 
-
 .service-title {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 4px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
 }
 
 .service-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background-color: #b13124;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease-out;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #b13124;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
 }
 
 .service-card:hover .service-title::after {
-  transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+@font-face {
+    font-family: "Material Symbols Outlined";
+    font-style: normal;
+    font-weight: 100 700;
+    src: url(../fonts/icons.woff2) format("woff2");
+}
+
+.material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
 }

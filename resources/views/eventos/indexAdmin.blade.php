@@ -30,10 +30,8 @@
 
                     <h2>Listado de eventos </h2>
                     <br>
-                    <p align="right">
+                    <p class="text-end">
                         <a href="{{ route('eventos.create') }}" class="btn btn-success">Capturar Evento</a>
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            < Regresar</a>
                     </p>
                     <table id="tabla" class="table table-striped table-bordered" style="width:100%">
                         <thead>
@@ -57,10 +55,7 @@
                     </table>
                 </div>
             </div>
-            <p>
-                <a href="{{ route('home') }}" class="btn btn-primary">
-                    Regresar</a>
-            </p>
+
         </div>
     @else
         Acceso No válido
@@ -70,7 +65,6 @@
 
 @push('js')
     <script>
-        
         $(document).ready(function() {
             console.log('Inicializando DataTable en tabla-eventos');
             $('#tabla').DataTable({
@@ -110,7 +104,53 @@
                 ]
             });
         });
-
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "portugues-pre": function(data) {
+                var a = 'a';
+                var e = 'e';
+                var i = 'i';
+                var o = 'o';
+                var u = 'u';
+                var c = 'c';
+                var special_letters = {
+                    "Á": a,
+                    "á": a,
+                    "Ã": a,
+                    "ã": a,
+                    "À": a,
+                    "à": a,
+                    "É": e,
+                    "é": e,
+                    "Ê": e,
+                    "ê": e,
+                    "Í": i,
+                    "í": i,
+                    "Î": i,
+                    "î": i,
+                    "Ó": o,
+                    "ó": o,
+                    "Õ": o,
+                    "õ": o,
+                    "Ô": o,
+                    "ô": o,
+                    "Ú": u,
+                    "ú": u,
+                    "Ü": u,
+                    "ü": u,
+                    "ç": c,
+                    "Ç": c
+                };
+                for (var val in special_letters)
+                    data = data.split(val).join(special_letters[val]).toLowerCase();
+                return data;
+            },
+            "portugues-asc": function(a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+            "portugues-desc": function(a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
 
         //"columnDefs": [{ type: 'portugues', targets: "_all" }],
     </script>

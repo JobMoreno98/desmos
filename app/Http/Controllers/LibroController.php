@@ -16,72 +16,37 @@ class LibroController extends Controller
      */
     public function index()
     {
-        $libros = Publicacion::where('activo','=',1)->where('categoria','=',1)->orderBy('anio','desc')->paginate(16);
+        $libros = Publicacion::where('activo', '=', 1)->where('categoria', '=', 1)->orderBy('anio', 'desc')->paginate(16);
 
 
-        return view('libros.index',compact('libros'));
+        return view('libros.index', compact('libros'));
     }
     public function indexAdmin()
     {
-        $vslibros = Publicacion::where('activo','=',1)->where('categoria','=',1)->get();
+        $vslibros = Publicacion::where('activo', '=', 1)->where('categoria', '=', 1)->get();
         $libros = $this->cargarDT($vslibros);
-        return view('libros.indexAdmin',compact('libros'));
+        return view('libros.indexAdmin', compact('libros'));
     }
     public function cargarDT($consulta)
     {
         $libro = [];
 
-        foreach ($consulta as $key => $value){
+        foreach ($consulta as $key => $value) {
 
-            $ruta = "eliminar".$value['id'];
-            $eliminar = route('delete-libro', $value['id']);
-            $actualizar =  route('libros.edit', $value['id']);
-         
+            $ruta = "eliminar" . $value['id'];
+            $eliminar = route('delete-libro', $value->id);
+            $actualizar =  route('libros.edit', $value->id);
 
-            $acciones = '
-                <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="'.$actualizar.'" role="button" class="btn btn-success" title="Actualizar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este libro?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-primary">
-                        <small> 
-                            '.$value['id'].'. '.$value['titulo'].'                 </small>
-                      </p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ';
+
+            $acciones = view('partials.acciones', compact('value', 'ruta', 'eliminar', 'actualizar'))->render();
 
             $libro[$key] = array(
-                $acciones,
                 $value['id'],
                 $value['titulo'],
                 $value['descripcion'],
                 $value['anio'],
-
+                $acciones
             );
-
         }
 
         return $libro;
@@ -106,11 +71,11 @@ class LibroController extends Controller
     public function store(Request $request)
     {
         //
-        $validateData = $this->validate($request,[
-            'titulo'=>'required',
-            'descripcion'=>'required',
+        $validateData = $this->validate($request, [
+            'titulo' => 'required',
+            'descripcion' => 'required',
         ]);
-        
+
         $libro = new Publicacion();
         $libro->titulo = $request->input('titulo');
         $libro->descripcion = $request->input('descripcion');
@@ -122,15 +87,15 @@ class LibroController extends Controller
 
         $files = $request->file('files');
 
-        if($files){
-            foreach($files as $file){
+        if ($files) {
+            foreach ($files as $file) {
 
                 $archivo = new Archivo();
                 // $archivo->evento_id = $evento->id;
-                $file_path = time().$file->getClientOriginalName();
+                $file_path = time() . $file->getClientOriginalName();
                 \Storage::disk('files')->put($file_path, \File::get($file));
                 $data[] = $file_path;
-         
+
                 $archivo->path = $file_path;
                 $libro->archivos()->save($archivo);
                 $libro->refresh();
@@ -138,35 +103,35 @@ class LibroController extends Controller
         }
 
         return redirect()->route('libros.create')->with(array(
-            'message'=>'El libro se guardó correctamente'
+            'message' => 'El libro se guardó correctamente'
         ));
     }
-    public function delete_libro($libro_id){
+    public function delete_libro($libro_id)
+    {
         $libro = Publicacion::find($libro_id);
-        if($libro){
+        if ($libro) {
             $libro->activo = 0;
             $libro->update();
-	    // //
-        //     $log = new Log();
-        //     $log->tabla = "areas";
-        //     $mov="";
-        //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
-        //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
-        //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
-        //     $log->movimiento = $mov;
-        //     $log->usuario_id = Auth::user()->id;
-        //     $log->acciones = "Borrado";
-        //     $log->save();
+            // //
+            //     $log = new Log();
+            //     $log->tabla = "areas";
+            //     $mov="";
+            //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
+            //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
+            //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
+            //     $log->movimiento = $mov;
+            //     $log->usuario_id = Auth::user()->id;
+            //     $log->acciones = "Borrado";
+            //     $log->save();
             //
             return redirect()->route('libros.indexAdmin')->with(array(
-               "message" => "El libro se ha eliminado correctamente"
+                "message" => "El libro se ha eliminado correctamente"
             ));
-        }else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "El libro que trata de eliminar no existe"
+                "message" => "El libro que trata de eliminar no existe"
             ));
         }
-
     }
 
     /**
@@ -177,9 +142,9 @@ class LibroController extends Controller
      */
     public function show($libro_id)
     {
-        $libro = Publicacion::where('categoria','=',1)->where("activo","=",1)->find($libro_id);
-        $archivos = $libro->archivos()->where('activo',1)->get();
-        return view('libros.show',compact('libro','archivos'));
+        $libro = Publicacion::where('categoria', '=', 1)->where("activo", "=", 1)->find($libro_id);
+        $archivos = $libro->archivos()->where('activo', 1)->get();
+        return view('libros.show', compact('libro', 'archivos'));
     }
 
     /**
@@ -191,8 +156,8 @@ class LibroController extends Controller
     public function edit($id)
     {
         $libro = Publicacion::find($id);
-        $archivos = $libro->archivos()->where('activo',1)->get();
-        return view('libros.edit',compact('libro','archivos'));
+        $archivos = $libro->archivos()->where('activo', 1)->get();
+        return view('libros.edit', compact('libro', 'archivos'));
     }
 
     /**
@@ -204,9 +169,9 @@ class LibroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
-            'titulo'=>'required',
-            'descripcion'=>'required',
+        $validateData = $this->validate($request, [
+            'titulo' => 'required',
+            'descripcion' => 'required',
 
         ]);
 
@@ -218,21 +183,21 @@ class LibroController extends Controller
 
 
 
-        
+
 
         $libro->update();
 
         $files = $request->file('files');
 
-        if($files){
-            foreach($files as $file){
+        if ($files) {
+            foreach ($files as $file) {
 
                 $archivo = new Archivo();
                 // $archivo->evento_id = $evento->id;
-                $file_path = time().$file->getClientOriginalName();
+                $file_path = time() . $file->getClientOriginalName();
                 \Storage::disk('files')->put($file_path, \File::get($file));
                 $data[] = $file_path;
-         
+
                 $archivo->path = $file_path;
                 $libro->archivos()->save($archivo);
                 $libro->refresh();
@@ -240,7 +205,7 @@ class LibroController extends Controller
         }
 
         return redirect()->route('libros.indexAdmin')->with(array(
-            'message'=>'El libro se actualizó correctamente'
+            'message' => 'El libro se actualizó correctamente'
         ));
     }
 

@@ -30,44 +30,13 @@ class UserController extends Controller
         foreach ($consulta as $key => $value) {
 
             $ruta = "eliminar" . $value['id'];
-            $eliminar = route('delete-usuario', $value['id']);
-            $actualizar =  route('usuarios.edit', $value['id']);
+            $eliminar = route('delete-usuario', $value->id);
+            $actualizar =  route('usuarios.edit', $value->id);
 
 
-            $acciones = '
-                <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="' . $actualizar . '" role="button" class="btn btn-success" title="Actualizar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este usuario?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-primary">
-                        <small> 
-                            ' . $value['id'] . '. ' . $value['name'] . '                 </small>
-                      </p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ';
+            $acciones = view('partials.acciones', compact('value', 'ruta', 'eliminar', 'actualizar'))->render();
+
+
 
             $libro[$key] = array(
                 $value['name'],

@@ -10,8 +10,8 @@
 
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-12 text-center mb-5">
-                            <h2 class="display-5 fw-bold mb-3">CID - DESMOS</h2>
+                        <div class="col-12 text-center mb-5 mt-2">
+                            <h2 class="display-5 fw-bold mb-3">{{ config('app.name', 'Laravel') }}</h2>
                         </div>
                     </div>
 

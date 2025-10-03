@@ -57,8 +57,8 @@ class HomeController extends Controller
                 'titulo' => 'Libros y capítulos',
                 'icon' => 'library_books',
                 'enlaces' => [
-                    'consultar' => route('divulgaciones.indexAdmin'),
-                    'crear' => route('divulgaciones.create')
+                    'consultar' => route('libros.indexAdmin'),
+                    'crear' => route('libros.create')
                 ]
 
             ],
