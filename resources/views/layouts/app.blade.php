@@ -15,9 +15,9 @@
         </main>
     </div>
     
-    @stack('js')
+    
     @include('layouts.scripts')
-    @yield('css')
+    
     @yield('js')
 </body>
 

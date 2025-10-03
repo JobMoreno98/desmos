@@ -26,7 +26,9 @@ class EventoController extends Controller
     public function indexAdmin()
     {
         $vsevento = Evento::where('activo', '=', 1)->get();
+
         $eventos = $this->cargarDT($vsevento);
+        
         return view('eventos.indexAdmin', compact('eventos'));
     }
     public function cargarDT($consulta)
@@ -34,51 +36,18 @@ class EventoController extends Controller
         $evento = [];
 
         foreach ($consulta as $key => $value) {
+            $ruta = "eliminar" . $value->id;
+            $eliminar = route('delete-evento', $value->id);
+            $actualizar = route('eventos.edit', $value->id);
 
-            $ruta = "eliminar" . $value['id'];
-            $eliminar = route('delete-evento', $value['id']);
-            $actualizar =  route('eventos.edit', $value['id']);
-            $acciones = '
-                <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="' . $actualizar . '" role="button" class="btn btn-success m-1 w-100 " title="Actualizar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="#' . $ruta . '" role="button" class="btn btn-danger m-1 w-100" data-toggle="modal" title="Eliminar">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este evento?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-primary">
-                        <small> 
-                            ' . $value['id'] . '. ' . $value['titulo'] . '                 </small>
-                      </p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ';
+            $acciones = view('eventos.partials.acciones', compact('value', 'ruta', 'eliminar', 'actualizar'))->render();
 
-            $evento[$key] = array(
-                $value['titulo'],
-                $value['fecha'],
-                substr($value['descripcion'],0,200),
-                $acciones,
-            );
+            $evento[$key] = [
+                'titulo' => $value->titulo,
+                'fecha' => $value->fecha,
+                'descripcion' => substr($value->descripcion, 0, 200),
+                'acciones' => $acciones,
+            ];
         }
 
         return $evento;

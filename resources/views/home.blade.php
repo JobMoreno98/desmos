@@ -6,162 +6,36 @@
             <div class="row align-items-center">
                 @if (Auth::check() && Auth::user()->rol == 'admin')
                     <div class="col-md-12 ">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-success">CID - DESMOS</div>
-                            <div class="row m-1">
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="card-icon">
-                                                    <i class="material-icons">person</i>
-                                                </div>
-                                                <h3 class="card-title">Investigadores <br></h3>
+                @endif
 
-                                            </div>
-
-                                            <a href="{{ route('investigadores.create') }}"
-                                                class="btn btn-sm btn-outline-success mb-2">Capturar Investigador</a>
-                                            <a href="{{ route('investigadores.indexAdmin') }}"
-                                                class="btn btn-sm btn-outline-danger mb-2">Consultar Investigadores</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
-                                        <div class="card-header card-header-info card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">event</i>
-                                            </div>
-                                            <h3 class="card-title">Eventos</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('eventos.create') }}">Capturar Evento</a>
-                                            <a href="{{ route('eventos.indexAdmin') }}"
-                                                class="btn btn-outline-danger mb-2">Consultar Eventos</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
-                                        <div class="card-header card-header-success card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">campaign</i>
-                                            </div>
-                                            <h3 class="card-title">Divulgación</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('divulgaciones.create') }}">Capturar Publicación</a>
-                                            <a class="btn btn-outline-danger mb-2"
-                                                href="{{ route('divulgaciones.indexAdmin') }}">Consultar Publicaciones</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
-                                        <div class="card-header card-header-secondary card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">menu_book</i>
-                                            </div>
-                                            <h3 class="card-title">Libros y capítulos</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('libros.create') }}">Capturar Libro</a>
-                                            <a class="btn btn-outline-danger mb-2"
-                                                href="{{ route('libros.indexAdmin') }}">Consultar Libros</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-sm-12 ">
-                                    <div class="card card-stats ">
-                                        <div class="card-header card-header-info card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">newspaper</i>
-                                            </div>
-                                            <h3 class="card-title">Artículos en revistas científicas</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('articulos.create') }}">Capturar artículo</a>
-                                            <a class="btn btn-outline-danger mb-2"
-                                                href="{{ route('articulos.indexAdmin') }}">Consultar artículos</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 ">
-                                    <div class="card card-stats ">
-                                        <div class="card-header card-header-info card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">dashboard</i>
-                                            </div>
-                                            <h3 class="card-title">Quiénes somos</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('quienes-somos.create') }}">Capturar seccion en Quiénes
-                                                Somos</a>
-                                            <a class="btn btn-outline-danger mb-2"
-                                                href="{{ route('quienes-somos.indexAdmin') }}">Consultar secciones</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 ">
-                                    <div class="card card-stats ">
-                                        <div class="card-header card-header-info card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">contact_mail</i>
-                                            </div>
-                                            <h3 class="card-title">Contactos</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('contactos.create') }}">Capturar contacto</a>
-                                            <a class="btn btn-outline-danger mb-2"
-                                                href="{{ route('contactos.indexAdmin') }}">Consultar contactos</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 ">
-                                    <div class="card card-stats ">
-                                        <div class="card-header card-header-info card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">group</i>
-                                            </div>
-                                            <h3 class="card-title">Usuarios</h3>
-                                            <a class="btn btn-outline-success mb-2"
-                                                href="{{ route('usuarios.create') }}">Registrar usuarios</a>
-                                            <a class="btn btn-outline-danger mb-2"
-                                                href="{{ route('usuarios.indexAdmin') }}">Consultar usuarios</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                                {{-- <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
-                                        <div class="card-header card-header-success card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">logout</i>
-                                            </div>
-                                            <h3 class="card-title">Salir</h3>
-                                            <a class="btn btn-outline-danger" href=""
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"
-                                >
-                                    {{ __('Salir') }}
-                                </a>
-                                <form id="logout-form" action="" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                                        <div class="card-footer">
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center mb-5">
+                            <h2 class="display-5 fw-bold mb-3">CID - DESMOS</h2>
                         </div>
                     </div>
-                @endif
+
+                    <div class="row g-4">
+                        @foreach ($coleccion as $key => $value)
+                            <div class="col-md-4">
+                                <div class="service-card h-100 p-4">
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <div class="icon-wrapper mb-4 me-1 text-white fs-4 ">
+                                            <span class="material-symbols-outlined icon">{{ $value['icon'] }} </span>
+                                        </div>
+                                        <h4 class="service-title text-center mb-3">{{ $value['titulo'] }}</h4>
+                                    </div>
+                                    <p class="service-text text-center mb-0">
+                                        <a href="{{ $value['enlaces']['consultar'] }}"
+                                            class="btn btn-sm btn-outline-success mb-2">{{ 'Consultar ' . $value['titulo'] }}</a>
+                                        <a href="{{ $value['enlaces']['crear'] }}"
+                                            class="btn btn-sm btn-outline-danger mb-2">{{ 'Crear ' . $value['titulo'] }}</a>
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>
