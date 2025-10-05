@@ -17,7 +17,7 @@
 
                     <div class="row g-4">
                         @foreach ($coleccion as $key => $value)
-                            <div class="col-md-4">
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                                 <div class="service-card h-100 p-4">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <div class="icon-wrapper mb-4 me-1 text-white fs-4 ">

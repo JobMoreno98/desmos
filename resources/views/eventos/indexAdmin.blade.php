@@ -2,7 +2,6 @@
 
 @section('content')
     @if (Auth::check() && Auth::user()->rol == 'admin')
-
         <div class="container ">
             <div class="row">
                 <div class="col-12">
@@ -25,7 +24,7 @@
                     <br>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row">
                 <div class="col-12">
 
                     <h2>Listado de eventos </h2>
@@ -84,7 +83,7 @@
                     [1, "desc"]
                 ],
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                    url: "{{ asset('datatable/es-Es.json') }}"
                 },
                 responsive: true,
                 dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',

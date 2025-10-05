@@ -9,8 +9,12 @@
 
 <body>
     <div id="preloader"></div>
-    <div>
+    @if (Auth::check())
         @include('layouts.navbar')
+    @endif
+    <div class="m-auto">
+
+
         <main>
             @yield('content')
         </main>
