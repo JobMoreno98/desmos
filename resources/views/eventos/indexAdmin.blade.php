@@ -3,7 +3,7 @@
 @section('content')
     @if (Auth::check() && Auth::user()->rol == 'admin')
 
-        <div class="container-fluid ">
+        <div class="container ">
             <div class="row">
                 <div class="col-12">
 
@@ -46,7 +46,9 @@
                             @foreach ($eventos as $item)
                                 <tr>
                                     <td>{{ $item['titulo'] }}</td>
-                                    <td>{{ $item['fecha'] }}</td>
+                                    <td data-order="{{ \Carbon\Carbon::parse($item['fecha'])->format('Y-m-d') }}">
+                                        {{ \Carbon\Carbon::parse($item['fecha'])->translatedFormat('  j \\d\\e F \\d\\e  Y') }}
+                                    </td>
                                     <td>{!! $item['descripcion'] !!}</td>
                                     <td>{!! $item['acciones'] !!}</td>
                                 </tr>
@@ -68,29 +70,21 @@
         $(document).ready(function() {
             console.log('Inicializando DataTable en tabla-eventos');
             $('#tabla').DataTable({
+                columnControl: ['order', 'colVisDropdown'],
+                ordering: {
+                    indicators: false,
+                    handler: false
+                },
+                columnDefs: [{
+                    target: [2],
+                    visible: false
+                }],
                 pageLength: 10,
                 order: [
                     [1, "desc"]
                 ],
                 language: {
-                    sProcessing: "Procesando...",
-                    sLengthMenu: "Mostrar _MENU_ registros",
-                    sZeroRecords: "No se encontraron resultados",
-                    sEmptyTable: "Ningún dato disponible en esta tabla",
-                    sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    sSearch: "Buscar:",
-                    oPaginate: {
-                        sFirst: "Primero",
-                        sLast: "Último",
-                        sNext: "Siguiente",
-                        sPrevious: "Anterior"
-                    },
-                    oAria: {
-                        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-                        sSortDescending: ": Activar para ordenar la columna de manera descendente"
-                    }
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 },
                 responsive: true,
                 dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',

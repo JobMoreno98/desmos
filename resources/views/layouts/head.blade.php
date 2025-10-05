@@ -19,12 +19,13 @@
 
 <link rel="icon" href="{{ asset('images/favicon.ico') }}" />
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
 <link
-    href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/b-html5-3.2.5/r-3.0.7/datatables.min.css"
-    rel="stylesheet" integrity="sha384-kwjMteuQq4gdrspsLX2qo8vYDKc2kj2AXvlHfKeNKlrU0TfmgM2jk5gIGxBqXyAQ"
+    href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.3.4/af-2.7.1/b-3.2.5/b-colvis-3.2.5/b-html5-3.2.5/b-print-3.2.5/cr-2.1.1/cc-1.1.0/r-3.0.7/datatables.min.css"
+    rel="stylesheet" integrity="sha384-9Ln0JbzQymIlMhjyLlbJxVhMn5jWVs13ruB/EighnnY0TLh35Pj2PJZPPQmdU4Zu"
     crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -37,6 +38,7 @@
 
 
 <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+@stack('css')
 
 <style>
     .login-container {
@@ -61,5 +63,37 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
+    }
+
+    #preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        overflow: hidden;
+        background: #ffffff;
+        transition: all 0.6s ease-out;
+    }
+
+    #preloader:before {
+        content: "";
+        position: fixed;
+        top: calc(50% - 30px);
+        left: calc(50% - 30px);
+        border: 6px solid #ffffff;
+        border-color: #b13124 transparent #b13124 transparent;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: animate-preloader 1.5s linear infinite;
+    }
+
+    @keyframes animate-preloader {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
     }
 </style>

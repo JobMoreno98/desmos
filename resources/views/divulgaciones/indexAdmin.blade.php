@@ -57,6 +57,11 @@
 
         $(document).ready(function() {
             $('#example').DataTable({
+                columnControl: ['order', 'colVisDropdown'],
+                ordering: {
+                    indicators: false,
+                    handler: false
+                },
                 "data": data,
                 "pageLength": 10,
                 "order": [

@@ -76,9 +76,9 @@ class InvestigadorController extends Controller
 
 
             $investigador[$key] = array(
+                $value['grado'],
                 $value['nombre'],
                 $value['apellido'],
-                $value['grado'],
                 $value['lineasInves'],
                 $value['correo'],
                 $value['proyecto_invest'],

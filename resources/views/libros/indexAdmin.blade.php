@@ -37,7 +37,7 @@
                         <thead>
                             <tr>
 
-                                <th>Id</th>
+                                <th>ID</th>
                                 <th>Titulo</th>
                                 <th>Descripcion</th>
                                 <th>Año</th>
@@ -65,6 +65,11 @@
 
         $(document).ready(function() {
             $('#example').DataTable({
+                                columnControl: ['order','colVisDropdown'],
+                ordering: {
+                    indicators: false,
+                    handler: false
+                },
                 "data": data,
                 "pageLength": 10,
                 "order": [

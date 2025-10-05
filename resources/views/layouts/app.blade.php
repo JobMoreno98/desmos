@@ -8,16 +8,17 @@
 </head>
 
 <body>
-    <div >
+    <div id="preloader"></div>
+    <div>
         @include('layouts.navbar')
         <main>
             @yield('content')
         </main>
     </div>
-    
-    
+
+
     @include('layouts.scripts')
-    
+
     @yield('js')
 </body>
 

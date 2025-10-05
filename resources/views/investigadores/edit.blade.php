@@ -68,6 +68,8 @@
                                 <select class="form-control" id="grado" name="grado">
                                     <option value="{{ $investigador->grado }}" selected>{{ $investigador->grado }}
                                     </option>
+                                    <option value="Licenciado">Licenciado</option>
+                                    <option value="Licenciada">Licenciada</option>
                                     <option value="Maestro">Maestro</option>
                                     <option value="Maestra">Maestra</option>
                                     <option value="Maestrante">Maestrante</option>

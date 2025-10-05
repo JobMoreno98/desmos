@@ -1,11 +1,16 @@
                 <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="{{ $actualizar }}" role="button" class="btn btn-success m-1 w-100 " title="Actualizar">
-                            <i class="far fa-edit"></i>
+                    <div class="btn-circle d-flex justify-content-center">
+                        <a href="{{ $actualizar }}" role="button" class="btn btn-success m-1 px-2 btn-sm "
+                            title="Actualizar">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
                         </a>
-                        <button type="button" class="btn btn-danger  m-1 w-100" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-danger  m-1 px-2 btn-sm " data-bs-toggle="modal"
                             data-bs-target="#{{ $ruta }}">
-                            <i class="far fa-trash-alt"></i>
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
                         </button>
                     </div>
                 </div>

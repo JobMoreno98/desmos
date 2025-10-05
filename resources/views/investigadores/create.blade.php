@@ -60,6 +60,8 @@
                                 <label class="font-weight-bold" for="grado">Grado*</label>
                                 <select class="form-control" id="grado" name="grado">
                                     <option disabled selected>Elegir</option>
+                                    <option value="Licenciado">Licenciado</option>
+                                    <option value="Licenciada">Licenciada</option>
                                     <option value="Maestro">Maestro</option>
                                     <option value="Maestra">Maestra</option>
                                     <option value="Maestrante">Maestrante</option>

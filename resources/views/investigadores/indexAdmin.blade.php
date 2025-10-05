@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/columncontrol/1.1.0/css/columnControl.dataTables.css">
+@endpush
 @section('content')
     @if (Auth::check() && Auth::user()->rol == 'admin')
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <div class="col-12">
 
@@ -35,9 +38,9 @@
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
+                                <th>Grado</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
-                                <th>Grado</th>
                                 <th>Línea investigación</th>
                                 <th>Correo</th>
                                 <th>Proyecto de investigación</th>
@@ -66,10 +69,19 @@
 
         $(document).ready(function() {
             $('#example').DataTable({
+                columnControl: ['order', 'colVisDropdown'],
+                ordering: {
+                    indicators: false,
+                    handler: false
+                },
+                columnDefs: [{
+                    target: [3, 6, 7],
+                    visible: false
+                }],
                 "data": data,
                 "pageLength": 10,
                 "order": [
-                    [0, "desc"]
+                    [1, "desc"]
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
@@ -84,6 +96,7 @@
                     "sUrl": "",
                     "sInfoThousands": ",",
                     "sLoadingRecords": "Cargando...",
+                    "Column visibility": "Visivilidad de columnas",
                     "oPaginate": {
                         "sFirst": "Primero",
                         "sLast": "Último",
