@@ -91,7 +91,6 @@
 
                 ]
             })
-            loader(false);
         });
 
 

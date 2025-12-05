@@ -71,7 +71,6 @@
 
                 ]
             })
-            loader(false);
         });
 
 
