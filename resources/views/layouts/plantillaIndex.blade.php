@@ -105,11 +105,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="widget">
+                    <div class="widget text-uppercase">
                         <img src="{{asset('/images/escudo_footer.png')}}">
                         <p>CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES</p>
                         <p>Departamento de Estudios sobre Movimientos Sociales (DESMOS)</p>
-                        <p>Av. de los Maestros y Av. Alcalde, puerta 1, edificio G, tercer nivel C.P. 44260.</p>
+                        <p>Los Belenes Av. José Parres Arias #150, San José del Bajío, edificio J, 4to Piso C.P. 45132.</p>
                         <p>Teléfono: (33) 3819-3327</p>
                     </div>
                 </div>
