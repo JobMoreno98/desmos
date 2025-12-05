@@ -38,7 +38,11 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <a href="{{ $eliminar }}" type="button" class="btn btn-danger">Eliminar</a>
+                                <form action="{{ $eliminar }}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
                             </div>
                         </div>
                     </div>

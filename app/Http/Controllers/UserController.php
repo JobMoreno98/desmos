@@ -30,7 +30,7 @@ class UserController extends Controller
         foreach ($consulta as $key => $value) {
 
             $ruta = "eliminar" . $value['id'];
-            $eliminar = route('delete-usuario', $value->id);
+            $eliminar = route('usuarios.destroy', $value->id);
             $actualizar =  route('usuarios.edit', $value->id);
 
 
@@ -138,33 +138,6 @@ class UserController extends Controller
             'message' => 'El usuario se actualizó correctamente'
         ));
     }
-    public function delete_evento($usuario_id)
-    {
-        $usuario = User::find($usuario_id);
-        if ($usuario) {
-            $usuario->activo = 0;
-            $usuario->update();
-            // //
-            //     $log = new Log();
-            //     $log->tabla = "areas";
-            //     $mov="";
-            //     $mov=$mov." tipo_espacio:".$area->tipo_espacio ." sede:". $area->sede ." edificio" .$area->edificio;
-            //     $mov=$mov." piso:".$area->piso ." division:". $area->division ." coordinacion" .$area->coordinacion;
-            //     $mov=$mov." equipamiento:".$area->equipamiento ." area:". $area->area .".";
-            //     $log->movimiento = $mov;
-            //     $log->usuario_id = Auth::user()->id;
-            //     $log->acciones = "Borrado";
-            //     $log->save();
-            //
-            return redirect()->route('usuarios.indexAdmin')->with(array(
-                "message" => "El usuario se ha eliminado correctamente"
-            ));
-        } else {
-            return redirect()->route('home')->with(array(
-                "message" => "El usuario que trata de eliminar no existe"
-            ));
-        }
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -174,6 +147,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $usuario = User::find($id);
+        if ($usuario) {
+            $usuario->activo = 0;
+            $usuario->delete();
+            return redirect()->route('usuarios.indexAdmin')->with(array(
+                "message" => "El usuario se ha eliminado correctamente"
+            ));
+        } else {
+            return redirect()->route('home')->with(array(
+                "message" => "El usuario que trata de eliminar no existe"
+            ));
+        }
     }
 }
